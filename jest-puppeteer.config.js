@@ -9,8 +9,6 @@ WIN32_ARGS = [
     '--user-agent=AppleWebKit Priority-Automation-Client',
     '--start-maximized',
     // '--start-fullscreen',
-    `--load-extension=${currentPath}/extensions/kicgagenknliidcnkinbijjdfklmbmjb/1.11_0`,
-    `--disable-extensions-except=${currentPath}/extensions/kicgagenknliidcnkinbijjdfklmbmjb/1.11_0`,
     '--disable-notifications',
     // '--disable-features=site-per-process'
 ]
@@ -20,9 +18,7 @@ DARWIN_ARGS = [
     '--disable-web-security',
     '-–allow-file-access-from-files',
     '--user-agent=Macintosh AppleWebKit Priority-Automation-Client',
-    '--start-fullscreen',
-    '--load-extension=extensions/kicgagenknliidcnkinbijjdfklmbmjb/1.11_0',
-    '--disable-extensions-except=extensions/kicgagenknliidcnkinbijjdfklmbmjb/1.11_0',
+    '--start-maximized',
     '--disable-notifications',
 ]
 LINUX_ARGS = [
@@ -32,14 +28,10 @@ LINUX_ARGS = [
     '-–allow-file-access-from-files',
     '--user-agent=AppleWebKit Priority-Automation-Client',
     '--start-fullscreen',
-    '--load-extension=extensions/kicgagenknliidcnkinbijjdfklmbmjb/1.11_0',
-    '--disable-extensions-except=extensions/kicgagenknliidcnkinbijjdfklmbmjb/1.11_0',
     '--disable-notifications',
     // '--disable-features=site-per-process'
 ]
 
-
-console.log('\nOS: ' + OS)
 switch (OS) {
     case 'win32':
         module.exports = {
