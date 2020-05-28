@@ -1,0 +1,49 @@
+{
+  "name": "ui-automation-pptr",
+  "jest": {
+    "preset": "jest-puppeteer",
+    "globals": {
+      "URL": "https://us.priority-software.com/demus/DEM4/?_automation=1#",
+      "USERNAME": "QA",
+      "PASSWORD": "123456",
+      "COMPANY_NAME": "training company"
+    }
+  },
+  "version": "1.0.0",
+  "description": "Puppeteer-Jest tests for Priority ERP",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sergtimosh/ui-automation-pptr.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/expect-puppeteer": "^4.4.0",
+    "@types/jest": "^24.9.0",
+    "@types/jest-environment-puppeteer": "^4.3.1",
+    "@types/puppeteer": "^2.0.0",
+    "cheerio": "^1.0.0-rc.3",
+    "faker": "^4.1.0",
+    "fs-extra": "^8.1.0",
+    "jest-environment-puppeteer": "^4.4.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "babel-jest": "^25.1.0",
+    "expect-puppeteer": "^4.4.0",
+    "gmail-tester": "^1.2.2",
+    "jest": "^25.1.0",
+    "jest-circus": "^25.1.0",
+    "jest-puppeteer": "^4.4.0",
+    "pdf-parse": "^1.1.1",
+    "puppeteer": "^2.1.1",
+    "xlsx": "^0.15.5",
+    "xml2js": "^0.4.23"
+  }
+}
