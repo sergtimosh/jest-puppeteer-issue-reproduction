@@ -10,13 +10,9 @@ module.exports = {
   globalSetup: './global-setup.js',
   // A set of global variables that need to be available in all test environments
   globals: {
-    URL: "https://us.priority-software.com/demus/DEM4/?_automation=1#",
-    USERNAME: 'QA',
-    PASSWORD: '123456',
-    COMPANY_NAME: 'training company'
   },
   // The maximum amount of workers used to run your tests. Can be specified as % or a number. E.g. maxWorkers: 10% will use 10% of your CPU amount + 1 as the maximum worker number. maxWorkers: 2 will use a maximum of 2 workers.
-  maxWorkers: 1,
+  maxWorkers: 2,
   // A preset that is used as a base for Jest's configuration
   preset: 'jest-puppeteer',
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
