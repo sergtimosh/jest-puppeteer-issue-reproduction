@@ -3,57 +3,54 @@ let ENVIRONMENT = process.env.ENV
 
 export let ENV_CONFIG = {
     URL: 'https://staging.priority-connect.online/pay/payments/devel/3',
-    USERS: {
-        USER_1: {
-            NAME: 'QA',
-            PASSWORD: '123456',
-            EMAIL: 'qa.priority.erp@gmail.com',
-            MAIL_PASSWORD: '123456Priority',
-            EMAIL2: 'gmail-tester@titanium-labs.com',
-            MAIL2_PASSWORD: 'prioritytitanium',
-            MAIL_SERVER: 'QA',
-            MAIL_SERVER2: 'QA2',
-        },
+    MICROSOFT_LOGIN: {
+        EMAIL: 'avishayd@priority-software.it',
+        PASSWORD: 'Az345Cx!'
     },
-
+    GMAIL_LOGIN: {
+        EMAIL: 'gmail-tester@titanium-labs.com',
+        PASSWORD: 'prioritytitanium'
+    },
+    EMAIL_LOGIN: {
+        EMAIL: 'gmail-tester@titanium-labs.com',
+        PASSWORD: '20autoauth20'
+    },
 }
 
 switch (ENVIRONMENT) {
     case 'HEBREW':
         ENV_CONFIG = {
-            URL: 'https://staging.priority-connect.online/pay/payments/devel/3',
-            USERS: {
-                USER_1: {
-                    NAME: 'QA',
-                    PASSWORD: '123456',
-                    EMAIL: 'qa.priority.erp@gmail.com',
-                    MAIL_PASSWORD: '123456Priority',
-                    EMAIL2: 'gmail-tester@titanium-labs.com',
-                    MAIL2_PASSWORD: 'prioritytitanium',
-                    MAIL_SERVER: 'QA',
-                    MAIL_SERVER2: 'QA2',
-                },
+            URL: 'https://staging.priority-connect.online/pay/payments/devel/1',
+            MICROSOFT_LOGIN: {
+                EMAIL: 'avishayd@priority-software.it',
+                PASSWORD: 'Az345Cx!'
             },
-        
+            GMAIL_LOGIN: {
+                EMAIL: '',
+                PASSWORD: ''
+            },
+            EMAIL_LOGIN: {
+                EMAIL: '',
+                PASSWORD: ''
+            },
         }
         break;
 
     case 'ENGLISH':
         ENV_CONFIG = {
             URL: 'https://staging.priority-connect.online/pay/payments/devel/3',
-            USERS: {
-                USER_1: {
-                    NAME: 'QA',
-                    PASSWORD: '123456',
-                    EMAIL: 'qa.priority.erp@gmail.com',
-                    MAIL_PASSWORD: '123456Priority',
-                    EMAIL2: 'gmail-tester@titanium-labs.com',
-                    MAIL2_PASSWORD: 'prioritytitanium',
-                    MAIL_SERVER: 'QA',
-                    MAIL_SERVER2: 'QA2',
-                },
+            MICROSOFT_LOGIN: {
+                EMAIL: 'avishayd@priority-software.it',
+                PASSWORD: 'Az345Cx!'
             },
-        
+            GMAIL_LOGIN: {
+                EMAIL: '',
+                PASSWORD: ''
+            },
+            EMAIL_LOGIN: {
+                EMAIL: '',
+                PASSWORD: ''
+            },
         }
         break;
 

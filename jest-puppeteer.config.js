@@ -1,5 +1,10 @@
 let OS = process.platform
-let currentPath = process.cwd()
+// let currentPath = process.cwd()
+
+const windowSize = {
+    width: 1400,
+    height: 800
+}
 
 WIN32_ARGS = [
     '--no-sandbox',
@@ -7,8 +12,8 @@ WIN32_ARGS = [
     '--disable-web-security',
     '-–allow-file-access-from-files',
     '--user-agent=AppleWebKit Priority-Automation-Client',
-    '--start-maximized',
-    // '--start-fullscreen',
+    '--start-fullscreen',
+    `--window-size=${windowSize.width + 200},${windowSize.height + 200}`,
     '--disable-notifications',
     // '--disable-features=site-per-process'
 ]
@@ -18,7 +23,9 @@ DARWIN_ARGS = [
     '--disable-web-security',
     '-–allow-file-access-from-files',
     '--user-agent=Macintosh AppleWebKit Priority-Automation-Client',
-    '--start-maximized',
+    '--start-fullscreen',
+    `--window-size=${windowSize.width + 400},${windowSize.height + 200}`,
+    // '--incognito',
     '--disable-notifications',
 ]
 LINUX_ARGS = [
@@ -28,6 +35,7 @@ LINUX_ARGS = [
     '-–allow-file-access-from-files',
     '--user-agent=AppleWebKit Priority-Automation-Client',
     '--start-fullscreen',
+    `--window-size=${windowSize.width},${windowSize.height}`,
     '--disable-notifications',
     // '--disable-features=site-per-process'
 ]
@@ -41,10 +49,7 @@ switch (OS) {
                 // devtools: true,
                 // executablePath: 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
                 args: WIN32_ARGS,
-                defaultViewport: {
-                    width: 1600,
-                    height: 720
-                },
+                defaultViewport: windowSize,
             },
         }
         break;
@@ -55,20 +60,14 @@ switch (OS) {
                     headless: false,
                     devtools: true,
                     args: DARWIN_ARGS,
-                    defaultViewport: {
-                        width: 1600,
-                        height: 720
-                    },
+                    defaultViewport: windowSize,
                 } :
                     {
                         headless: process.env.HEADLESS !== 'false',
-                        slowMo: process.env.SLOWMO ? process.env.SLOWMO : 0,
+                        // slowMo: process.env.SLOWMO ? process.env.SLOWMO : 0,
                         // executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
                         args: DARWIN_ARGS,
-                        defaultViewport: {
-                            width: 1600,
-                            height: 720
-                        },
+                        defaultViewport: windowSize,
                     },
         }
         break;
@@ -80,10 +79,7 @@ switch (OS) {
                 devtools: true,
                 // executablePath: 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
                 args: LINUX_ARGS,
-                defaultViewport: {
-                    width: 1600,
-                    height: 720
-                },
+                defaultViewport: windowSize,
             },
         }
         break;
@@ -95,10 +91,7 @@ switch (OS) {
                 devtools: true,
                 // executablePath: 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
                 args: LINUX_ARGS,
-                defaultViewport: {
-                    width: 1600,
-                    height: 720
-                },
+                defaultViewport: windowSize,
             },
         }
         break;
