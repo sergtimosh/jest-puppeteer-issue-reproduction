@@ -1,7 +1,10 @@
-import { ELEMENTS_TEXT } from "../support/data/elementsText"
+import { AUTH_DATA } from "../support/data/auth_data"
+import { ELEMENTS_TEXT } from "../support/data/elements_text"
 import { ENV_CONFIG } from "../support/data/env_config"
 import { basicHelper } from "../support/helpers/BasicHelper"
 import { browserHelper } from "../support/helpers/BrowserHelper"
+import { commonCardAssert } from "../support/pages/sections/CommonCard"
+import { signInCard } from "../support/pages/sections/SignInCard"
 import { welcomeCard, welcomeCardAssert } from "../support/pages/sections/WelcomeCard"
 
 jest.retryTimes(0)
@@ -35,9 +38,9 @@ describe('Login via Third Party Auth Services', () => {
         const privacyLinkText = ELEMENTS_TEXT.WELCOME_CARD.DISCLAIMER_PRIVACY_LINK
 
         //assert title text
-        await welcomeCardAssert.isTitleRowText(firstHeader, 0)
-        await welcomeCardAssert.isTitleRowText(thirdHeader, 2)
-        await welcomeCardAssert.isTitleRowText(sectionDivider, 3)
+        await commonCardAssert.isTitleRowText(firstHeader, 0)
+        await commonCardAssert.isTitleRowText(thirdHeader, 2)
+        await commonCardAssert.isTitleRowText(sectionDivider, 3)
 
         //assert  button text
         await welcomeCardAssert.isMicrosoftButtonText(microsoftButtonText)
@@ -45,13 +48,13 @@ describe('Login via Third Party Auth Services', () => {
         await welcomeCardAssert.isCommonSignButtonText(commonSignInText)
 
         //assert disclaimer links
-        await welcomeCardAssert.isDisclaimerLinkText(termsLinkText, 0)
-        await welcomeCardAssert.isDisclaimerLinkText(privacyLinkText, 1)
+        await commonCardAssert.isDisclaimerLinkText(termsLinkText, 0)
+        await commonCardAssert.isDisclaimerLinkText(privacyLinkText, 1)
     })
 
     test('Login via Google', async () => {
-        const googleEmail = ENV_CONFIG.GMAIL_LOGIN.EMAIL
-        const googlePassword = ENV_CONFIG.GMAIL_LOGIN.PASSWORD
+        const googleEmail = AUTH_DATA.GMAIL_LOGIN.EMAIL
+        const googlePassword = AUTH_DATA.GMAIL_LOGIN.PASSWORD
 
         //sign in via Google
         await Promise.all([
@@ -64,28 +67,18 @@ describe('Login via Third Party Auth Services', () => {
         await page.waitFor(500)
         const buttonNextSelector = await basicHelper.raceSelectors(['#identifierNext:not([disabled])', '#next:not([disabled])'])
         await clickElementAndWaitForNavigation(buttonNextSelector)
-        // const buttonNext = await page.waitForSelector(buttonNextSelector, { visible: true, timeout: 5000 })
-        // await Promise.all([
-        //     buttonNext.click(),
-        //     page.waitForNavigation({ waitUntil: 'networkidle0' }),
-        // ])
         const passwordInput = await page.waitForSelector('input[type="password"]', { visible: true, timeout: 5000 })
         await passwordInput.type(googlePassword)
         const subMitSelector = await basicHelper.raceSelectors(['#identifierNext:not([disabled])', '#submit:not([disabled]'])
         await clickElementAndWaitForNavigation(subMitSelector)
-        // const signInButton = await page.waitForSelector(subMitSelector, { visible: true, timeout: 5000 })
-        // await Promise.all([
-        //     await signInButton.click(),
-        //     await page.waitForNavigation({ waitUntil: 'networkidle0' })
-        // ])
         await basicHelper.waitForNetworkIdle({ timeout: 600 })
         const currentUrl = page.url()
         expect(currentUrl).toBe(`${URL}/billing`)
     })
 
     test('Login via Microsoft 365', async () => {
-        const microsoftLogin = ENV_CONFIG.MICROSOFT_LOGIN.EMAIL
-        const microsoftPassword = ENV_CONFIG.MICROSOFT_LOGIN.PASSWORD
+        const microsoftLogin = AUTH_DATA.MICROSOFT_LOGIN.EMAIL
+        const microsoftPassword = AUTH_DATA.MICROSOFT_LOGIN.PASSWORD
 
         //sign in via MS 365
         await Promise.all([
@@ -105,7 +98,48 @@ describe('Login via Third Party Auth Services', () => {
         //verify URL
         await basicHelper.waitForNetworkIdle({ timeout: 600 })
         const currentUrl = page.url()
-        expect(currentUrl).toBe(`${URL}/billing`)
+        expect(currentUrl).toEqual(`${URL}/billing`)
+    })
+
+    test('Verify Returning Back to Auth Selection', async () => {
+        const email = AUTH_DATA.EMAIL_LOGIN.EMAIL
+        const password = AUTH_DATA.EMAIL_LOGIN.PASSWORD
+
+        //visit Microsoft sign in card
+        await Promise.all([
+            welcomeCard.clickMicrosoftSignIn(),
+            page.waitForNavigation({ waitUntil: 'networkidle0' }),
+        ])
+        let currentUrl = page.url()
+        expect(currentUrl).toContain('login.microsoftonline.com')
+
+        //go back
+        await page.goBack() //for Back button in microsoft UI
+        await page.goBack() //for browser back arrow
+
+        //visit Google sign in card
+        await Promise.all([
+            welcomeCard.clickGoogleSignIn(),
+            page.waitForNavigation({ waitUntil: 'networkidle0' }),
+        ])
+        currentUrl = page.url()
+        expect(currentUrl).toContain('google.com')
+
+        //go back
+        await page.goBack()
+
+        //sign in via email
+        await welcomeCard.clickSignInWithYourMail()
+        await signInCard.setEmail(email)
+        await signInCard.setPassword(password)
+        await Promise.all([
+            await signInCard.clickSignIn(),
+            page.waitForNavigation({ waitUntil: 'networkidle0' }),
+        ])
+
+        //verify URL
+        currentUrl = page.url()
+        expect(currentUrl).toEqual(`${URL}/billing`)
 
     })
 
