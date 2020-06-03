@@ -380,11 +380,10 @@ export const basicHelper = {
     await page.waitForFunction(`document.getElementsByClassName("${className}")[0].value == "${val}"`)
   },
 
-  async waitForNetworkIdle(timeout, { maxInflightRequests = 0, optPage } = {}) {
-    const page2 = optPage || page
-    page2.on('request', onRequestStarted);
-    page2.on('requestfinished', onRequestFinished);
-    page2.on('requestfailed', onRequestFinished);
+  async waitForNetworkIdle({ timeout = 5000, maxInflightRequests = 0 } = {}) {
+    page.on('request', onRequestStarted);
+    page.on('requestfinished', onRequestFinished);
+    page.on('requestfailed', onRequestFinished);
 
     let inflight = 0;
     let fulfill;
@@ -393,9 +392,9 @@ export const basicHelper = {
     return promise;
 
     function onTimeoutDone() {
-      page2.removeListener('request', onRequestStarted);
-      page2.removeListener('requestfinished', onRequestFinished);
-      page2.removeListener('requestfailed', onRequestFinished);
+      page.removeListener('request', onRequestStarted);
+      page.removeListener('requestfinished', onRequestFinished);
+      page.removeListener('requestfailed', onRequestFinished);
       fulfill();
     }
 

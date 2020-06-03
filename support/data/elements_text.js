@@ -11,6 +11,10 @@ export let ELEMENTS_TEXT = {
         COMMON_SIGN_BUTTON: 'Sign in with your email',
         DISCLAIMER_TERMS_LINK: 'Terms of Use,',
         DISCLAIMER_PRIVACY_LINK: 'Privacy Policy'
+    },
+
+    SIGN_IN_CARD: {
+        SECOND_HEADER: 'Sign in with your email'
     }
 }
 
@@ -26,6 +30,10 @@ switch (ENVIRONMENT) {
                 COMMON_SIGN_BUTTON: 'התחברות עם כתובת הדוא\"ל שלך',
                 DISCLAIMER_TERMS_LINK: 'מדיניות השימוש,',
                 DISCLAIMER_PRIVACY_LINK: 'מדיניות הפרטיות'
+            },
+
+            SIGN_IN_CARD: {
+                SECOND_HEADER: 'התחברות עם כתובת הדוא\"ל שלך'
             }
         }
         break;
@@ -41,23 +49,16 @@ switch (ENVIRONMENT) {
                 COMMON_SIGN_BUTTON: 'Sign in with your email',
                 DISCLAIMER_TERMS_LINK: 'Terms of Use,',
                 DISCLAIMER_PRIVACY_LINK: 'Privacy Policy'
+            },
+
+            SIGN_IN_CARD: {
+                SECOND_HEADER: 'Sign in with your email'
             }
         }
         break;
 
     default:
-        ELEMENTS_TEXT = {
-            WELCOME_CARD: {
-                FIRST_HEADER: 'Welcome to',
-                THIRD_HEADER: 'How would you like to connect?',
-                SECTION_DIVIDER: 'or',
-                MICROSOFT_BUTTON: 'With Office 365',
-                GOOGLE_BUTTON: 'With Google',
-                COMMON_SIGN_BUTTON: 'Sign in with your email',
-                DISCLAIMER_TERMS_LINK: 'Terms of Use,',
-                DISCLAIMER_PRIVACY_LINK: 'Privacy Policy'
-            }
-        }
+        ELEMENTS_TEXT
         break;
 }
 
