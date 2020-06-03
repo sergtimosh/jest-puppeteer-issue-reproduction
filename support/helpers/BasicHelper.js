@@ -40,8 +40,10 @@ export const basicHelper = {
 
   async clear(selector) {
     await page.evaluate(selector => {
-      document.querySelector(selector).value = "";
-    }, selector);
+      document.querySelector(selector).value = ""
+    }, selector)
+    const inputHandle = (await page.$$(selector))[0]
+    await inputHandle.evaluate(clear => clear.dispatchEvent(new Event('change', { bubbles: true })))
   },
 
   async selectElementOption(css, text, i = 0) {

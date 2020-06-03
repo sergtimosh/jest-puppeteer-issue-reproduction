@@ -1,2 +1,2 @@
-jest.setTimeout(20000);
-jest.retryTimes(2);
+jest.setTimeout(20000)
+jest.retryTimes(1)
