@@ -17,6 +17,10 @@ export const dataHelper = {
         return faker.internet.email(prefix)
     },
 
+    randPassword() {
+        return faker.internet.password()
+    },
+
     //arrays
     selectRandomOfArray(arr = []) {
         return arr[Math.floor(Math.random() * arr.length)]
