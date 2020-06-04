@@ -64,6 +64,10 @@ switch (ENVIRONMENT) {
                 FIRST_HEADER: 'תודה שנרשמת!',
                 SECOND_HEADER: 'שלחנו לך מייל לאישור',
                 THIRD_HEADER: 'נא לבדוק את תיבת הדוא"ל שלך, \nולאשר את הכתובת בלחיצה על הקישור שבמייל.',
+            },
+
+            REGISTRATION_EMAIL: {
+                SUBJECT: 'Welcome to Priority Connect',
             }
         }
         break;
