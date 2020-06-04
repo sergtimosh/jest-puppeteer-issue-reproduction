@@ -41,5 +41,10 @@ export const mailHelper = {
     const $ = cheerio.load(html)
     $('body').find('br').replaceWith(' ')
     return $('body').text()
+  },
+
+  getConfirmationLink(html) {
+    let $ = cheerio.load(html)
+    return $('a').attr().href
   }
 } 
