@@ -29,6 +29,7 @@ describe('Sign up', () => {
     const signUpSectionSecondTitle = ELEMENTS_TEXT.SIGN_UP_CARD.SECOND_HEADER
 
     test('Sign up', async () => {
+        jest.setTimeout(40000)
         const email = AUTH_DATA.SIGN_UP_MAIL_TEMPLATE
         const password = dataHelper.randPassword()
         const from = AUTH_DATA.REGISTRATION_FROM_EMAIL
