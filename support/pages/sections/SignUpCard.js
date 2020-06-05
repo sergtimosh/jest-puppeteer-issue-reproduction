@@ -4,6 +4,7 @@ const emailInput = 'input[name="email"]'
 const passwordInput = 'input[name="password"]'
 const secondPasswordInput = 'input[name="second password"]'
 const signUpButton = 'button[type="submit"]'
+const goBackLink = '.social-sign-in-link > button'
 
 export const signUpCard = {
 
@@ -35,6 +36,11 @@ export const signUpCard = {
     //actions
     async clickSignUp() {
         const button = await page.waitForSelector(signUpButton)
+        await button.click()
+    },
+
+    async clickGoBackLink() {
+        const button = await page.waitForSelector(goBackLink)
         await button.click()
     },
 
