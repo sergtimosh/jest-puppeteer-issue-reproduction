@@ -32,6 +32,13 @@ export let ELEMENTS_TEXT = {
 
     REGISTRATION_EMAIL: {
         SUBJECT: 'Welcome to Priority Connect',
+    },
+
+    CARD_FIELDS_HINTS: {
+        SHORT_PASSWORD: 'The password is too short',
+        CONPROMISED_PASSWORD: 'This password was compromised in the past!',
+        PASSWORDS_NOT_MATCHING: 'The passwords do not match',
+        PASSWORD_OK: 'OK',
     }
 }
 
@@ -68,6 +75,13 @@ switch (ENVIRONMENT) {
 
             REGISTRATION_EMAIL: {
                 SUBJECT: 'Welcome to Priority Connect',
+            },
+
+            CARD_FIELDS_HINTS: {
+                SHORT_PASSWORD: 'הסיסמה קצרה מדי',
+                CONPROMISED_PASSWORD: 'סיסמה זו נפרצה בעבר ואינה בטוחה',
+                PASSWORDS_NOT_MATCHING: 'הסיסמאות לא תואמות',
+                PASSWORD_OK: 'תקין',
             }
         }
         break;
