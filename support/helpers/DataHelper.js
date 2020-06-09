@@ -17,8 +17,8 @@ export const dataHelper = {
         return faker.internet.email(prefix)
     },
 
-    randPassword() {
-        return faker.internet.password()
+    randPassword(len = 8) {
+        return faker.internet.password(len = len)
     },
 
     //arrays

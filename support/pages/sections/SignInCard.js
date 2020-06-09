@@ -1,3 +1,4 @@
+import { ELEMENTS_TEXT } from "../../data/elements_text"
 import { basicHelper } from "../../helpers/BasicHelper"
 
 const emailInput = 'input[name="email"]'
@@ -5,9 +6,11 @@ const passwordInput = 'input[name="password"]'
 const signInButton = '.email-signin-button'
 const errorMessageBlock = '.animated.error-message'
 const showPasswordIcon = '.icon-iconon-show-password-on'
+const bottomSectionLinks = '.bottom-section button'
 
 export const signInCard = {
 
+    //setters
     async setEmail(text) {
         const input = await page.waitForSelector(emailInput, { timeout: 2000 })
         await input.click({ clickCount: 3 })
@@ -24,16 +27,10 @@ export const signInCard = {
         expect(actualValue).toEqual(text)
     },
 
+    //actions
     async clickSignIn() {
         const button = await page.waitForSelector(signInButton, { timeout: 2000 })
         await button.click()
-    },
-
-    async clearEmail() {
-        await page.waitForSelector(emailInput, { timeout: 2000 })
-        await basicHelper.clear(emailInput)
-        const actualValue = await basicHelper.getInputValue(emailInput)
-        expect(actualValue).toEqual('')
     },
 
     async clearPassword() {
@@ -46,6 +43,11 @@ export const signInCard = {
     async clickShowPassword() {
         const icon = await page.waitForSelector(showPasswordIcon, { timeout: 2000 })
         await icon.click()
+    },
+
+    async clickSignUpLink() {
+        await page.waitForSelector(bottomSectionLinks)
+        await basicHelper.clickElementByTextContent(bottomSectionLinks, ELEMENTS_TEXT.SIGN_IN_CARD.SIGN_UP_LINK)
     }
 }
 
