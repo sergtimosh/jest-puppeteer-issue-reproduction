@@ -34,12 +34,26 @@ export let ELEMENTS_TEXT = {
         SUBJECT: 'Welcome to Priority Connect',
     },
 
+    RESET_PASWORD_EMAIL: {
+        SUBJECT: 'reset password',
+    },
+
     CARD_FIELDS_HINTS: {
         SHORT_PASSWORD: 'The password is too short',
         CONPROMISED_PASSWORD: 'This password was compromised in the past!',
         PASSWORDS_NOT_MATCHING: 'The passwords do not match',
         PASSWORD_OK: 'OK',
-    }
+    },
+
+    FORGOT_PASSWORD_CARD: {
+        FIRST_ROW: 'Forgot your',
+        SECOND_ROW: 'Password?',
+    },
+
+    FORGOT_PASSWORD_CONFIRMATION_CARD: {
+        FIRST_ROW: 'Reset password email\nwas sent to:',
+        THIRD_ROW: 'The reset link will be sent to you in the next few minutes.\nPlease check your email.',
+    },
 }
 
 switch (ENVIRONMENT) {
