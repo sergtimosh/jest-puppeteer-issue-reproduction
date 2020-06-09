@@ -52,7 +52,7 @@ describe('Sign up', () => {
         //sign up and verify sign up message
         await signUpCard.clickSignUp()
         await signUpCard.waitForSignUpButtonNotVisible()
-        await basicHelper.waitForNetworkIdle(300)
+        await basicHelper.waitForNetworkIdle({ timeout: 350 })
         await commonCardAssert.isTitleRowText(ELEMENTS_TEXT.THANK_YOU_CARD.FIRST_HEADER, 0)
         await commonCardAssert.isTitleRowText(ELEMENTS_TEXT.THANK_YOU_CARD.SECOND_HEADER, 1)
         await commonCardAssert.isTitleRowText(ELEMENTS_TEXT.THANK_YOU_CARD.THIRD_HEADER, 2)
