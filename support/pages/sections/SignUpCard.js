@@ -5,6 +5,7 @@ const passwordInput = 'input[name="password"]'
 const secondPasswordInput = 'input[name="second password"]'
 const signUpButton = 'button[type="submit"]'
 const goBackLink = '.social-sign-in-link > button'
+const signInLink = '.submit-row div[class*="Label-module_clickable"]'
 
 export const signUpCard = {
 
@@ -41,6 +42,11 @@ export const signUpCard = {
 
     async clickGoBackLink() {
         const button = await page.waitForSelector(goBackLink)
+        await button.click()
+    },
+
+    async clickSignInLink() {
+        const button = await page.waitForSelector(signInLink)
         await button.click()
     },
 

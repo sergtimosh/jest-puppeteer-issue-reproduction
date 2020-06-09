@@ -139,7 +139,7 @@ describe('Sign up', () => {
 
         //check compromised password validation
         await signUpCard.setPassword(compromisedPassword)
-        await basicHelper.waitForNetworkIdle({ timeout: 150 })
+        await basicHelper.waitForNetworkIdle({ timeout: 250 })
         await commonCardAssert.isHintText(ELEMENTS_TEXT.CARD_FIELDS_HINTS.CONPROMISED_PASSWORD, 1)
     })
 
@@ -207,15 +207,31 @@ describe('Sign up', () => {
 
     })
 
-    test.skip('Verify Clicking Sign in Link for Sign up Section', async () => {
+    test('Verify Clicking Sign in Link for Sign up Section', async () => {
+        const email = AUTH_DATA.SIGN_UP_MAIL_TEMPLATE
+        const password = dataHelper.randPassword()
+        //sign in section title
+        const secondHeader = ELEMENTS_TEXT.SIGN_IN_CARD.SECOND_HEADER
+
+        //go to sign up card
+        await welcomeCard.clickSignInWithYourMail()
+        await signInCard.clickSignUpLink()
+        await commonCardAssert.isTitleRowText(signUpSectionSecondTitle, 1)
+
+        //click Sign in link
+        await signUpCard.clickSignInLink()
+        await commonCardAssert.isTitleRowText(secondHeader, 1)
+
+        //click Sign up again and set values to all input fields
+        await signInCard.clickSignUpLink()
+        await commonCardAssert.isTitleRowText(signUpSectionSecondTitle, 1)
+        await signUpCard.setEmail(email)
+        await signUpCard.setPassword(password)
+        await signUpCard.setSecondPassword(password)
+
+        ///click Sign in link
+        await signUpCard.clickSignInLink()
+        await commonCardAssert.isTitleRowText(secondHeader, 1)
     })
 
 })
-
-async function clickElementAndWaitForNavigation(selector) {
-    const elHandle = await page.waitForSelector(selector, { visible: true, timeout: 5000 })
-    await Promise.all([
-        await elHandle.click(),
-        page.waitForNavigation({ waitUntil: 'networkidle0' }),
-    ])
-}
