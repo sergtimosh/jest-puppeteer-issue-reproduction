@@ -7,6 +7,7 @@ const signInButton = '.email-signin-button'
 const errorMessageBlock = '.animated.error-message'
 const showPasswordIcon = '.icon-iconon-show-password-on'
 const bottomSectionLinks = '.bottom-section button'
+const forgotPasswordLink = '.submit-row button[class*="Button-module_link"]'
 
 export const signInCard = {
 
@@ -43,6 +44,11 @@ export const signInCard = {
     async clickShowPassword() {
         const icon = await page.waitForSelector(showPasswordIcon, { timeout: 2000 })
         await icon.click()
+    },
+
+    async clickForgotPasswordLink() {
+        const link = await page.waitForSelector(forgotPasswordLink)
+        await link.click()
     },
 
     async clickSignUpLink() {
