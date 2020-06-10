@@ -10,7 +10,7 @@ import { signInCard, signInCardAssert } from "../support/pages/sections/SignInCa
 import { signUpCard, signUpCardAssert } from "../support/pages/sections/SignUpCard"
 import { welcomeCard, welcomeCardAssert } from "../support/pages/sections/WelcomeCard"
 
-jest.retryTimes(0)
+// jest.retryTimes(0)
 
 const URL = ENV_CONFIG.URL
 console.log(`environment url - ${URL}`)

@@ -11,7 +11,7 @@ import { forgotPasswordCard, forgotPasswordCardAssert } from "../support/pages/s
 import { signInCard } from "../support/pages/sections/SignInCard"
 import { welcomeCard, welcomeCardAssert } from "../support/pages/sections/WelcomeCard"
 
-jest.retryTimes(0)
+// jest.retryTimes(0)
 
 const URL = ENV_CONFIG.URL
 console.log(`environment url - ${URL}`)
