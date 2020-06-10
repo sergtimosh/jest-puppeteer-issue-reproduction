@@ -2,6 +2,7 @@ import { basicHelper } from "../../helpers/BasicHelper"
 
 const sendResetPasswordButton = 'button[type="submit"]'
 const emailInput = 'input[name="email"]'
+const cancelButton = 'button.form-stroke-button'
 const goBackButton = 'button[class*="Button-module_link"]'
 
 export const forgotPasswordCard = {
@@ -23,6 +24,11 @@ export const forgotPasswordCard = {
 
     async clickGoBackButton() {
         const button = await page.waitForSelector(goBackButton)
+        await button.click()
+    },
+
+    async clickCancelButton() {
+        const button = await page.waitForSelector(cancelButton)
         await button.click()
     }
 }
