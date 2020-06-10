@@ -1,6 +1,7 @@
 import { basicHelper } from "../../helpers/BasicHelper"
 
 const titleTextRows = '[class*="Title-module_component"]'
+const cardMessageText = '.card-text'
 const disclaimerLinks = 'button.disclaimer-link'
 const errorMessageBlock = '.animated.error-message'
 const hints = 'div[class*="Input-module_hintText"]'
@@ -10,6 +11,12 @@ export const commonCardAssert = {
     async isTitleRowText(text, i = 0) {
         await page.waitForSelector(titleTextRows)
         const titleRowText = await basicHelper.getElementText(titleTextRows, i)
+        expect(titleRowText.trim()).toEqual(text)
+    },
+
+    async isCardText(text, i = 0) {
+        await page.waitForSelector(cardMessageText)
+        const titleRowText = await basicHelper.getElementText(cardMessageText, i)
         expect(titleRowText.trim()).toEqual(text)
     },
 
