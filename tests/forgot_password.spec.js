@@ -1,6 +1,7 @@
 import { AUTH_DATA } from "../support/data/auth_data"
 import { ELEMENTS_TEXT } from "../support/data/elements_text"
 import { ENV_CONFIG } from "../support/data/env_config"
+import { TEST_DATA } from "../support/data/test_data.js"
 import { basicHelper } from "../support/helpers/BasicHelper"
 import { browserHelper } from "../support/helpers/BrowserHelper"
 import { dataHelper } from "../support/helpers/DataHelper"
@@ -8,7 +9,6 @@ import { mailHelper } from "../support/helpers/MailHelper"
 import { commonCardAssert } from "../support/pages/sections/CommonCard"
 import { forgotPasswordCard, forgotPasswordCardAssert } from "../support/pages/sections/ForgotPasswordCard"
 import { signInCard } from "../support/pages/sections/SignInCard"
-import { signUpCard } from "../support/pages/sections/SignUpCard"
 import { welcomeCard } from "../support/pages/sections/WelcomeCard"
 
 jest.retryTimes(0)
@@ -26,14 +26,13 @@ beforeEach(async () => {
 })
 
 describe('Forgot Password', () => {
+    const secondHeader = ELEMENTS_TEXT.SIGN_IN_CARD.SECOND_HEADER
 
-    test.only('Reset Password', async () => {
+    test.skip('Reset Password', async () => {
         jest.setTimeout(40000)
         const email = AUTH_DATA.RESET_PASS_EMAIL
         const password = dataHelper.randPassword()
-        const from = AUTH_DATA.REGISTRATION_FROM_EMAIL
         const subject = ELEMENTS_TEXT.RESET_PASWORD_EMAIL.SUBJECT
-        const secondHeader = ELEMENTS_TEXT.SIGN_IN_CARD.SECOND_HEADER
 
         //go to sign in with email card
         await welcomeCard.clickSignInWithYourMail()
@@ -50,7 +49,7 @@ describe('Forgot Password', () => {
         await forgotPasswordCardAssert.isSentResetEnabled() //verify button is enabled
         await forgotPasswordCard.clickResetPasswordButton()
 
-        //verify confirmation message fo reset password action
+        //verify confirmation message for reset password action
         await basicHelper.waitForNetworkIdle({ timeout: 250 })
         await commonCardAssert.isTitleRowText(ELEMENTS_TEXT.FORGOT_PASSWORD_CONFIRMATION_CARD.FIRST_ROW, 0)
         await commonCardAssert.isTitleRowText(email, 1)
@@ -58,9 +57,9 @@ describe('Forgot Password', () => {
         //verify mailBox
         let emails = await mailHelper.messageChecker()
         let startTime = Date.now()
-        while (emails.length === 0 && Date.now() - startTime < 20000) {
-            console.log(`Polling emails received from: ${from}...`)
-            await page.waitFor(5000)
+        while (emails.length === 0 && Date.now() - startTime < 40000) {
+            console.log(`Polling emails on mailbox: ${email}...`)
+            await page.waitFor(4000)
             emails = await mailHelper.messageChecker()
         }
         expect(emails.length).toBeGreaterThanOrEqual(1)
@@ -77,20 +76,73 @@ describe('Forgot Password', () => {
         await jestPuppeteer.debug()
     }, 999999)
 
-    test('Verify Cancel for Forgot Password Section', async () => {
-        const registeredEmail = AUTH_DATA.EMAIL_LOGIN.EMAIL
-        const password = dataHelper.randPassword()
-        //go to sign up card
+    test.skip('Validate Email in Forgot Password Card', async () => {
+        const invalidEmails = TEST_DATA.INVALID_EMAILS
+        const validEmails = TEST_DATA.VALID_EMAILS
+        const email = AUTH_DATA.RESET_PASS_EMAIL
+
+        //go to sign in with email card
         await welcomeCard.clickSignInWithYourMail()
-        await signInCard.clickSignUpLink()
+        await commonCardAssert.isTitleRowText(secondHeader, 1)
 
-        //set email and password x 2
-        await signUpCard.setEmail(registeredEmail)
-        await signUpCard.setPassword(password)
-        await signUpCard.setSecondPassword(password)
+        //Click forgot password link
+        await signInCard.clickForgotPasswordLink()
 
-        //try to sign up
-        await signUpCard.clickSignUp()
-        await commonCardAssert.isErrorrMessageText(ELEMENTS_TEXT.SIGN_UP_CARD.EMAIL_EXIST_MESSAGE)
+        //set invalid passwords from array of invalid emails and verify hint message
+        for (const invalidEmail of invalidEmails) {
+            await forgotPasswordCard.setEmail(invalidEmail)
+            await commonCardAssert.isHintText(ELEMENTS_TEXT.CARD_FIELDS_HINTS.INVALID_EMAIL)
+            await forgotPasswordCardAssert.isSentResetDisabled()
+        }
+
+        //set valid emails and verify  hint message is not displayed
+        for (const validEmail of validEmails) {
+            await forgotPasswordCard.setEmail(validEmail)
+            await commonCardAssert.isHintText('')
+            await forgotPasswordCardAssert.isSentResetEnabled()
+        }
+        
+        //set registered email and verify hint message is not displayed
+        await forgotPasswordCard.setEmail(email)
+        await commonCardAssert.isHintText('')
+        await forgotPasswordCardAssert.isSentResetEnabled()
+    })
+    
+    test.only('Click Go Back after Performing Forgot Password Action', async () => {
+        jest.setTimeout(40000)
+        const email = AUTH_DATA.RESET_PASS_EMAIL
+
+        //go to sign in with email card
+        await welcomeCard.clickSignInWithYourMail()
+        await commonCardAssert.isTitleRowText(secondHeader, 1)
+        
+        //go to Forgot Password card, set registered email and confirm reset
+        await signInCard.clickForgotPasswordLink()
+        await forgotPasswordCard.setEmail(email)
+        await forgotPasswordCardAssert.isSentResetEnabled() //verify button is enabled
+        await forgotPasswordCard.clickResetPasswordButton()
+
+        //verify confirmation message for reset password action
+        await basicHelper.waitForNetworkIdle({ timeout: 250 })
+        await commonCardAssert.isTitleRowText(ELEMENTS_TEXT.FORGOT_PASSWORD_CONFIRMATION_CARD.FIRST_ROW, 0)
+        await commonCardAssert.isTitleRowText(email, 1)
+        await commonCardAssert.isCardText(ELEMENTS_TEXT.FORGOT_PASSWORD_CONFIRMATION_CARD.THIRD_ROW)
+
+        //click Go Back link
+        await forgotPasswordCard.clickGoBackButton()
+        await commonCardAssert.isTitleRowText(ELEMENTS_TEXT.FORGOT_PASSWORD_CARD.FIRST_ROW, 0)
+        await commonCardAssert.isTitleRowText(ELEMENTS_TEXT.FORGOT_PASSWORD_CARD.SECOND_ROW, 1)
+        await forgotPasswordCardAssert.isSentResetDisabled()
+        await forgotPasswordCardAssert.isEmailFieldValue('')
+
+        //perform reset password again
+        await forgotPasswordCard.setEmail(email)
+        await forgotPasswordCardAssert.isSentResetEnabled() //verify button is enabled
+        await forgotPasswordCard.clickResetPasswordButton()
+        await basicHelper.waitForNetworkIdle({ timeout: 250 })
+        await commonCardAssert.isTitleRowText(ELEMENTS_TEXT.FORGOT_PASSWORD_CONFIRMATION_CARD.FIRST_ROW, 0)
+        await commonCardAssert.isTitleRowText(email, 1)
+        await commonCardAssert.isCardText(ELEMENTS_TEXT.FORGOT_PASSWORD_CONFIRMATION_CARD.THIRD_ROW)
+
     })
 })

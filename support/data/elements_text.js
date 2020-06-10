@@ -43,6 +43,7 @@ export let ELEMENTS_TEXT = {
         CONPROMISED_PASSWORD: 'This password was compromised in the past!',
         PASSWORDS_NOT_MATCHING: 'The passwords do not match',
         PASSWORD_OK: 'OK',
+        INVALID_EMAIL: 'Enter a valid email address',
     },
 
     FORGOT_PASSWORD_CARD: {
@@ -59,6 +60,7 @@ export let ELEMENTS_TEXT = {
 switch (ENVIRONMENT) {
     case 'HEBREW':
         ELEMENTS_TEXT = {
+
             WELCOME_CARD: {
                 FIRST_HEADER: 'ברוכים הבאים ל',
                 THIRD_HEADER: 'אפשר להתחבר בכמה דרכים:',
@@ -91,12 +93,27 @@ switch (ENVIRONMENT) {
                 SUBJECT: 'Welcome to Priority Connect',
             },
 
+            RESET_PASWORD_EMAIL: {
+                SUBJECT: 'איפוס סיסמא',
+            },
+
             CARD_FIELDS_HINTS: {
                 SHORT_PASSWORD: 'הסיסמה קצרה מדי',
                 CONPROMISED_PASSWORD: 'סיסמה זו נפרצה בעבר ואינה בטוחה',
                 PASSWORDS_NOT_MATCHING: 'הסיסמאות לא תואמות',
                 PASSWORD_OK: 'תקין',
-            }
+                INVALID_EMAIL: 'כתובת הדוא\"ל לא תקינה',
+            },
+            
+            FORGOT_PASSWORD_CARD: {
+                FIRST_ROW: 'שכחת',
+                SECOND_ROW: 'סיסמה?',
+            },
+        
+            FORGOT_PASSWORD_CONFIRMATION_CARD: {
+                FIRST_ROW: 'מייל איפוס סיסמה\nנשלח ל:',
+                THIRD_ROW: 'קישור לאיפוס סיסמה ישלח אליך בדקות הקרובות\nאנא בדוק את תיבת הדואר הנכנס.',
+            },
         }
         break;
 

@@ -27,7 +27,7 @@ export const mailHelper = {
       resolve("support/gmail-tester-data/gmail_token.json"),
       {
         include_body: true,
-        after: new Date(Date.now() - 120000)
+        after: new Date(Date.now() - 60000)
       }
     )
     return email
