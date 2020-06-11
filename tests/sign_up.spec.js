@@ -10,7 +10,7 @@ import { signInCard, signInCardAssert } from "../support/pages/sections/SignInCa
 import { signUpCard, signUpCardAssert } from "../support/pages/sections/SignUpCard"
 import { welcomeCard, welcomeCardAssert } from "../support/pages/sections/WelcomeCard"
 
-// jest.retryTimes(0)
+jest.retryTimes(0)
 
 const URL = ENV_CONFIG.URL
 console.log(`environment url - ${URL}`)
@@ -69,16 +69,8 @@ describe('Sign up', () => {
         await signInCardAssert.isErrorrMessageText(ELEMENTS_TEXT.SIGN_IN_CARD.WRONG_CREDENTIALS_MESSAGE)
 
         //verify mailBox
-        let emails = await mailHelper.messageChecker()
-        let startTime = Date.now()
-        while (emails.length === 0 && Date.now() - startTime < 20000) {
-            console.log(`Polling emails received from: ${from}...`)
-            await page.waitFor(5000)
-            emails = await mailHelper.messageChecker()
-        }
-        expect(emails.length).toBeGreaterThanOrEqual(1)
-        expect(emails[0].subject).toBe(subject)
-        const emailBodyHtml = emails[0].body.html
+        let emails = await mailHelper.inboxChecker({ to: email, subject: subject })
+        const emailBodyHtml = emails.body.html
         const conirmationURL = mailHelper.getConfirmationLink(emailBodyHtml) //grab link from email body
         console.log(`cofirmation URL = ${conirmationURL}`)
 
