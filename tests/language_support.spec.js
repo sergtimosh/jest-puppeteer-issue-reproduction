@@ -1,4 +1,4 @@
-import { ELEMENTS_TEXT, ENGLISH_TEXT, HEBREW_TEXT } from "../support/data/elements_text"
+import { ENGLISH_TEXT, HEBREW_TEXT } from "../support/data/elements_text"
 import { ENVIRONMENTS } from "../support/data/env_config"
 import { browserHelper } from "../support/helpers/BrowserHelper"
 import { commonCardAssert } from "../support/pages/sections/CommonCard"
@@ -17,7 +17,6 @@ beforeEach(async () => {
 })
 
 describe('Language Support', () => {
-    const secondHeader = ELEMENTS_TEXT.SIGN_IN_CARD.SECOND_HEADER
 
     //there is a bug on step 5
     test('Hebrew Support', async () => {
