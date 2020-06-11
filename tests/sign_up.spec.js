@@ -32,7 +32,6 @@ describe('Sign up', () => {
         jest.setTimeout(40000)
         const email = AUTH_DATA.SIGN_UP_MAIL_TEMPLATE
         const password = dataHelper.randPassword()
-        const from = AUTH_DATA.REGISTRATION_FROM_EMAIL
         const subject = ELEMENTS_TEXT.REGISTRATION_EMAIL.SUBJECT
 
         //go to sign up card
