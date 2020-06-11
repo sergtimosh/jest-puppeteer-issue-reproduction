@@ -4,14 +4,14 @@ const cheerio = require('cheerio')
 
 export const mailHelper = {
 
-  async inboxChecker(from, subject) {
+  async inboxChecker({to, subject, from} = {}) {
     const email = await check_inbox(
       resolve("support/gmail-tester-data/credentials.json"),
       resolve("support/gmail-tester-data/gmail_token.json"),
       {
         subject: subject,
         from: from,
-        // to: COMPANIES.COMPANY1.USERS.USER_1.EMAIL2,
+        to: to,
         wait_time_sec: 8,       // Poll interval (in seconds)
         max_wait_time_sec: 32,   // Maximum poll interval (in seconds). If reached, return null, indicating the completion of the task().
         include_body: true
