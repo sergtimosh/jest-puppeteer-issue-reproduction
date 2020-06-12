@@ -1,4 +1,3 @@
-import { ELEMENTS_TEXT } from "../../data/elements_text"
 import { basicHelper } from "../../helpers/BasicHelper"
 
 const emailInput = 'input[name="email"]'
@@ -6,6 +5,7 @@ const passwordInput = 'input[name="password"]'
 const signInButton = '.email-signin-button'
 const errorMessageBlock = '.animated.error-message'
 const showPasswordIcon = '.icon-iconon-show-password-on'
+const signUpLink = '.bottom-section > div > button'
 const bottomSectionLinks = '.bottom-section button'
 const forgotPasswordLink = '.submit-row button[class*="Button-module_link"]'
 
@@ -52,8 +52,8 @@ export const signInCard = {
     },
 
     async clickSignUpLink() {
-        await page.waitForSelector(bottomSectionLinks)
-        await basicHelper.clickElementByTextContent(bottomSectionLinks, ELEMENTS_TEXT.SIGN_IN_CARD.SIGN_UP_LINK)
+        const button = await page.waitForSelector(signUpLink)
+        await button.click()
     }
 }
 

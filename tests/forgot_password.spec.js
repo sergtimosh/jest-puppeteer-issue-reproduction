@@ -56,7 +56,7 @@ describe('Forgot Password', () => {
         await commonCardAssert.isTitleRowText(email, 1)
         await commonCardAssert.isCardText(ELEMENTS_TEXT.FORGOT_PASSWORD_CONFIRMATION_CARD.THIRD_ROW)
         //verify mailBox
-        let emails = await mailHelper.messageChecker()
+        let emails = await mailHelper.messageChecker({to: email, subject: subject})
         let startTime = Date.now()
         while (emails.length === 0 && Date.now() - startTime < 40000) {
             console.log(`Polling emails on mailbox: ${email}...`)
