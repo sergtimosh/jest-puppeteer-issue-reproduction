@@ -10,7 +10,7 @@ import { signInCard, signInCardAssert } from "../support/pages/sections/SignInCa
 import { signUpCard, signUpCardAssert } from "../support/pages/sections/SignUpCard"
 import { welcomeCard, welcomeCardAssert } from "../support/pages/sections/WelcomeCard"
 
-jest.retryTimes(0)
+// jest.retryTimes(0)
 
 const URL = ENV_CONFIG.URL
 console.log(`environment url - ${URL}`)
@@ -29,7 +29,6 @@ describe('Sign up', () => {
     const signUpSectionSecondTitle = ELEMENTS_TEXT.SIGN_UP_CARD.SECOND_HEADER
 
     test('Sign up', async () => {
-        jest.setTimeout(40000)
         const email = AUTH_DATA.SIGN_UP_MAIL_TEMPLATE
         const password = dataHelper.randPassword()
         const subject = ELEMENTS_TEXT.REGISTRATION_EMAIL.SUBJECT
@@ -68,7 +67,7 @@ describe('Sign up', () => {
         await signInCardAssert.isErrorrMessageText(ELEMENTS_TEXT.SIGN_IN_CARD.WRONG_CREDENTIALS_MESSAGE)
 
         //verify mailBox
-        let emails = await mailHelper.inboxChecker({ to: email, subject: subject })
+        let emails = await mailHelper.inboxChecker({ to: email, subject: subject, timeout: 50 })
         const emailBodyHtml = emails.body.html
         const conirmationURL = mailHelper.getConfirmationLink(emailBodyHtml) //grab link from email body
         console.log(`cofirmation URL = ${conirmationURL}`)
@@ -91,7 +90,7 @@ describe('Sign up', () => {
         //verify URL
         let currentUrl = page.url()
         expect(currentUrl).toEqual(`${URL}/billing`)
-    })
+    }, 50000)
 
     test('Sign up with Same Email Twice', async () => {
         const registeredEmail = AUTH_DATA.EMAIL_LOGIN.EMAIL
