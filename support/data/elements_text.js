@@ -56,6 +56,16 @@ export let ELEMENTS_TEXT = {
         FIRST_ROW: String,
         THIRD_ROW: String,
     },
+
+    RESET_PASSWORD_CARD: {
+        FIRST_ROW: String,
+        SECOND_ROW: String
+    },
+
+    RESET_PASSWORD_SUCCESS_CARD: {
+        FIRST_ROW: String,
+        SECOND_ROW: String
+    }
 }
 
 export const HEBREW_TEXT = {
@@ -114,6 +124,16 @@ export const HEBREW_TEXT = {
         FIRST_ROW: 'מייל איפוס סיסמה\nנשלח ל:',
         THIRD_ROW: 'קישור לאיפוס סיסמה ישלח אליך בדקות הקרובות\nאנא בדוק את תיבת הדואר הנכנס.',
     },
+
+    RESET_PASSWORD_CARD: {
+        FIRST_ROW: 'איפוס',
+        SECOND_ROW: 'סיסמה'
+    },
+
+    RESET_PASSWORD_SUCCESS_CARD: {
+        FIRST_ROW: 'הסיסמה שלך',
+        SECOND_ROW: 'שונתה בהצלחה :)'
+    }
 }
 
 export const ENGLISH_TEXT = {
@@ -171,6 +191,16 @@ export const ENGLISH_TEXT = {
         FIRST_ROW: 'Reset password email\nwas sent to:',
         THIRD_ROW: 'The reset link will be sent to you in the next few minutes.\nPlease check your email.',
     },
+
+    RESET_PASSWORD_CARD: {
+        FIRST_ROW: 'Password',
+        SECOND_ROW: 'Reset'
+    },
+
+    RESET_PASSWORD_SUCCESS_CARD: {
+        FIRST_ROW: 'Your Password was',
+        SECOND_ROW: 'Successfully changed :)'
+    }
 }
 
 switch (ENVIRONMENT) {

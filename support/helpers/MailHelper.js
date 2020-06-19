@@ -20,8 +20,7 @@ export const mailHelper = {
     return email
   },
 
-  async messageChecker({ from, to, subject } = {}) {
-    const date = Date(Date.now()) - 20000
+  async messageChecker({ from, to, subject, interval = 60000 } = {}) {
     const email = await get_messages(
       resolve("support/gmail-tester-data/credentials.json"),
       resolve("support/gmail-tester-data/gmail_token.json"),
@@ -30,7 +29,7 @@ export const mailHelper = {
         to: to,
         subject: subject,
         include_body: true,
-        after: new Date(Date.now() - 60000)
+        after: new Date(Date.now() - interval)
       }
     )
     return email
