@@ -20,8 +20,7 @@ export const welcomeCard = {
     },
 
     async clickSignInWithYourMail() {
-        await page.waitForSelector(commonSignIn, { timeout: 2000 })
-        await page.click(commonSignIn)
+        await basicHelper.clickUntilElementGone({ selector: commonSignIn })
     }
 }
 
