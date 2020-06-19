@@ -7,7 +7,7 @@ import { signInCard } from "../support/pages/sections/SignInCard"
 import { signUpCard } from "../support/pages/sections/SignUpCard"
 import { welcomeCard, welcomeCardAssert } from "../support/pages/sections/WelcomeCard"
 
-jest.retryTimes(0)
+// jest.retryTimes(0)
 
 const HEBREW_URL = ENVIRONMENTS.HEBREW
 const ENGLISH_URL = ENVIRONMENTS.ENGLISH

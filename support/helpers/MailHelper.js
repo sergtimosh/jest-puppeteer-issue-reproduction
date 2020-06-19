@@ -4,7 +4,7 @@ const cheerio = require('cheerio')
 
 export const mailHelper = {
 
-  async inboxChecker({ to, subject, from } = {}) {
+  async inboxChecker({ to, subject, from, timeout = 40 } = {}) {
     const email = await check_inbox(
       resolve("support/gmail-tester-data/credentials.json"),
       resolve("support/gmail-tester-data/gmail_token.json"),
@@ -13,15 +13,14 @@ export const mailHelper = {
         from: from,
         to: to,
         wait_time_sec: 8,       // Poll interval (in seconds)
-        max_wait_time_sec: 32,   // Maximum poll interval (in seconds). If reached, return null, indicating the completion of the task().
+        max_wait_time_sec: timeout,   // Maximum poll interval (in seconds). If reached, return null, indicating the completion of the task().
         include_body: true
       }
     )
     return email
   },
 
-  async messageChecker({ from, to, subject } = {}) {
-    const date = Date(Date.now()) - 20000
+  async messageChecker({ from, to, subject, interval = 60000 } = {}) {
     const email = await get_messages(
       resolve("support/gmail-tester-data/credentials.json"),
       resolve("support/gmail-tester-data/gmail_token.json"),
@@ -30,7 +29,7 @@ export const mailHelper = {
         to: to,
         subject: subject,
         include_body: true,
-        after: new Date(Date.now() - 60000)
+        after: new Date(Date.now() - interval)
       }
     )
     return email

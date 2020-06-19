@@ -79,6 +79,19 @@ export const basicHelper = {
       && Date.now() - startTime < 3000)
   },
 
+  async clickUntilElementGone({ selector, timeout = 5000 } = {}) {
+    let startTime = Date.now()
+    let count = 0
+    do {
+      count++
+      await page.waitForSelector(selector, { timeout: 2000, visible: true })
+      await page.click(selector)
+    } while (
+      (await this.isElementVisible(selector))
+      && Date.now() - startTime < timeout)
+    console.log(`${selector}  pressed - ${count} time(s)`)
+  },
+
   async pressEnterUntilInputIsReadOnly(selector, inputHandle, i = 0) {
     let startTime = Date.now()
     let count = 0
@@ -88,7 +101,7 @@ export const basicHelper = {
     } while (
       !(await this.isElementReadOnly(selector, i))
       && Date.now() - startTime < 3000)
-    console.log(selector + ' Enter pressed - ' + count + ' times')
+    console.log(selector + ' Enter pressed - ' + count + ' time(s)')
   },
 
   async typeWord(word) {
