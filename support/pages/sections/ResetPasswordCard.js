@@ -29,3 +29,12 @@ export const resetPasswordCard = {
         await button.click()
     },
 }
+
+export const resetPasswordCardAssert = {
+
+    async isResetDisabled() {
+        const button = await page.waitForSelector(resetButton)
+        const isDisabled = await page.evaluate(e => e.disabled, button)
+        expect(isDisabled).toBeTruthy()
+    },
+}
