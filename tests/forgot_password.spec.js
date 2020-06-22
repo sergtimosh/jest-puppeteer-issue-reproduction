@@ -12,7 +12,7 @@ import { resetPasswordCard } from "../support/pages/sections/ResetPasswordCard"
 import { signInCard, signInCardAssert } from "../support/pages/sections/SignInCard"
 import { welcomeCard, welcomeCardAssert } from "../support/pages/sections/WelcomeCard"
 
-// jest.retryTimes(0)
+jest.retryTimes(0)
 
 const URL = ENV_CONFIG.URL
 console.log(`environment url - ${URL}`)
@@ -36,7 +36,7 @@ describe('Forgot Password', () => {
     }
 
     //there is a bug on step 5
-    test('Reset Password', async () => {
+    test.only('Reset Password', async () => {
         const email = AUTH_DATA.RESET_PASS_EMAIL
         const firstPassword = dataHelper.randPassword()
         const secondPassword = dataHelper.randPassword()
@@ -95,7 +95,7 @@ describe('Forgot Password', () => {
 
         await resetPassword()
         //verify mailBox
-        let emails = await mailHelper.messageChecker({ to: email, subject: subject , interval: 20000})
+        let emails = await mailHelper.messageChecker({ to: email, subject: subject , interval: 5000})
         let startTime = Date.now()
         while (emails.length === 0 && Date.now() - startTime < 120000) {
             console.log(`Polling emails on mailbox: ${email}...`)
@@ -109,12 +109,12 @@ describe('Forgot Password', () => {
         //set new password
         await setNewPassword(resetPasswordURL, firstPassword)
 
-        // //click Login button
-        // await Promise.all([
-        //     await page.click('button'),
-        //     page.waitForNavigation({ waitUntil: 'networkidle0' }),
-        // ])
-        // await verifyLoginSuccess()
+        //click Login button
+        await Promise.all([
+            await page.click('button'),
+            page.waitForNavigation({ waitUntil: 'networkidle0' }),
+        ])
+        await verifyLoginSuccess()
 
         //assert user can sign in with new password through default login form
         await Promise.all([
