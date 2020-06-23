@@ -12,7 +12,7 @@ import { resetPasswordCard, resetPasswordCardAssert } from "../support/pages/sec
 import { signInCard, signInCardAssert } from "../support/pages/sections/SignInCard"
 import { welcomeCard, welcomeCardAssert } from "../support/pages/sections/WelcomeCard"
 
-jest.retryTimes(0)
+// jest.retryTimes(0)
 
 const URL = ENV_CONFIG.URL
 console.log(`environment url - ${URL}`)
@@ -89,21 +89,22 @@ describe('Forgot Password', () => {
         const secondPassword = dataHelper.randPassword()
         const subject = ELEMENTS_TEXT.RESET_PASWORD_EMAIL.SUBJECT
         const wrongCredentialsMesssage = ELEMENTS_TEXT.SIGN_IN_CARD.WRONG_CREDENTIALS_MESSAGE
-        console.log(`first password - ${firstPassword}`)
-        console.log(`second password - ${secondPassword}`)
 
         await resetPassword()
         //verify mailBox
-        let emails = await mailHelper.messageChecker({ to: resetEmail, subject: subject, interval: 5000 })
+        let emails = await mailHelper.messageChecker({ to: resetEmail, subject: subject, interval: 10000 })
         let startTime = Date.now()
         while (emails.length === 0 && Date.now() - startTime < 120000) {
             console.log(`Polling emails on mailbox: ${resetEmail}...`)
             await page.waitFor(4000)
-            emails = await mailHelper.messageChecker()
+            emails = await mailHelper.messageChecker({ to: resetEmail, subject: subject, interval: 10000 })
         }
         let emailBodyHtml = emails[0].body.html
         const resetPasswordURL = mailHelper.getConfirmationLink(emailBodyHtml) //grab link from email body
-        console.log(`reset password URL = ${resetPasswordURL}`)
+        console.log(`reset password URL - ${resetPasswordURL}`)
+        for (const email of emails) {
+            console.log(`subject - ${email.subject}`)
+        }
 
         //set new password
         await setNewPassword(resetPasswordURL, firstPassword)
@@ -140,11 +141,11 @@ describe('Forgot Password', () => {
         startTime = Date.now()
         let newResetPasswordURL
         do {
-            emails = await mailHelper.messageChecker({ to: resetEmail, subject: subject })
+            emails = await mailHelper.messageChecker({ to: resetEmail, subject: subject, interval: 10000 })
             while (emails.length === 0 && Date.now() - startTime < 40000) {
                 console.log(`Polling emails on mailbox: ${resetEmail}...`)
                 await page.waitFor(4000)
-                emails = await mailHelper.messageChecker()
+                emails = await mailHelper.messageChecker({ to: resetEmail, subject: subject, interval: 10000 })
             }
             emailBodyHtml = emails[0].body.html
             newResetPasswordURL = mailHelper.getConfirmationLink(emailBodyHtml)
@@ -306,18 +307,18 @@ describe('Forgot Password', () => {
             page.waitForNavigation({ waitUntil: 'networkidle0' })
         ])
         await resetPasswordCardAssert.isResetDisabled()
-        
+
         //set new password and click Reset
         await resetPasswordCard.setPassword(shortPassword)
         await commonCardAssert.isHintText(ELEMENTS_TEXT.CARD_FIELDS_HINTS.SHORT_PASSWORD, 0)
         await resetPasswordCardAssert.isResetDisabled()
-        
+
         //check 8 characters password is OK
         await resetPasswordCard.setPassword(validPassword)
         await commonCardAssert.isHintText('', 0)
         await resetPasswordCard.setSecondPassword(validPassword)
         await commonCardAssert.isHintText('OK', 1)
-        
+
         //check compromised password validation
         await resetPasswordCard.setPassword(compromisedPassword)
         await basicHelper.waitForNetworkIdle({ timeout: 250 })
