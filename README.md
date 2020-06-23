@@ -56,7 +56,15 @@ $ npx jest    //execute tests against default environment and with default langu
 ```
 - run any(in windows power shell):
 ```
-> $env:ENV='DEV' LANG='HEB'; npx jest    //execute tests against DEV environment with HEBREW language parameter
+> $env:ENV='DEV'; $env:LANG='HEB'; npx jest    //execute tests against DEV environment with HEBREW language parameter in windows power shell
+```
+
+#### Run tests in paralell:
+- run any:
+```
+$ npx jest --maxWorkers=1           //that will run only one test in a row
+
+$ npx jest --maxWorkers=4           //that will run 4 tests in a row
 ```
 
 #### Detecting flaky tests:
