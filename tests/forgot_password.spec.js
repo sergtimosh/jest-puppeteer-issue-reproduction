@@ -8,11 +8,11 @@ import { dataHelper } from "../support/helpers/DataHelper"
 import { mailHelper } from "../support/helpers/MailHelper"
 import { commonCardAssert } from "../support/pages/sections/CommonCard"
 import { forgotPasswordCard, forgotPasswordCardAssert } from "../support/pages/sections/ForgotPasswordCard"
-import { resetPasswordCard } from "../support/pages/sections/ResetPasswordCard"
+import { resetPasswordCard, resetPasswordCardAssert } from "../support/pages/sections/ResetPasswordCard"
 import { signInCard, signInCardAssert } from "../support/pages/sections/SignInCard"
 import { welcomeCard, welcomeCardAssert } from "../support/pages/sections/WelcomeCard"
 
-jest.retryTimes(0)
+// jest.retryTimes(0)
 
 const URL = ENV_CONFIG.URL
 console.log(`environment url - ${URL}`)
@@ -28,83 +28,83 @@ beforeEach(async () => {
 
 describe('Forgot Password', () => {
     const secondHeader = ELEMENTS_TEXT.SIGN_IN_CARD.SECOND_HEADER
+    const resetEmail = AUTH_DATA.RESET_PASS_EMAIL
+
     async function reloadPage() {
         await Promise.all([
             page.reload(),
             page.waitForNavigation({ waitUntil: 'networkidle0' })
         ])
     }
+    async function resetPassword() {
+        //go to sign in with email card
+        await welcomeCard.clickSignInWithYourMail()
+        await commonCardAssert.isTitleRowText(secondHeader, 1)
 
-    //there is a bug on step 5
-    test.only('Reset Password', async () => {
-        const email = AUTH_DATA.RESET_PASS_EMAIL
+        //Click forgot password link
+        await signInCard.clickForgotPasswordLink()
+        await commonCardAssert.isTitleRowText(ELEMENTS_TEXT.FORGOT_PASSWORD_CARD.FIRST_ROW, 0)
+        await commonCardAssert.isTitleRowText(ELEMENTS_TEXT.FORGOT_PASSWORD_CARD.SECOND_ROW, 1)
+        await forgotPasswordCardAssert.isSentResetDisabled() //verify button is disabled
+
+        //set registered email and confirm reset
+        await forgotPasswordCard.setEmail(resetEmail)
+        await forgotPasswordCardAssert.isSentResetEnabled() //verify button is enabled
+        await forgotPasswordCard.clickResetPasswordButton()
+
+        //verify confirmation message for reset password action
+        await basicHelper.waitForNetworkIdle({ timeout: 250 })
+        await commonCardAssert.isTitleRowText(ELEMENTS_TEXT.FORGOT_PASSWORD_CONFIRMATION_CARD.FIRST_ROW, 0)
+        await commonCardAssert.isTitleRowText(resetEmail, 1)
+        await commonCardAssert.isCardText(ELEMENTS_TEXT.FORGOT_PASSWORD_CONFIRMATION_CARD.THIRD_ROW)
+    }
+    async function setNewPassword(resetURL, pass) {
+        //visit new confirmation link
+        await Promise.all([
+            page.goto(resetURL, { waitUntil: 'domcontentloaded' }),
+            page.waitForNavigation({ waitUntil: 'networkidle0' })
+        ])
+
+        //assert card is correct
+        await commonCardAssert.isTitleRowText(ELEMENTS_TEXT.RESET_PASSWORD_CARD.FIRST_ROW)
+        await commonCardAssert.isTitleRowText(ELEMENTS_TEXT.RESET_PASSWORD_CARD.SECOND_ROW, 1)
+
+        //set new password and click Reset
+        await resetPasswordCard.setPassword(pass)
+        await resetPasswordCard.setSecondPassword(pass)
+        await resetPasswordCard.clickResetButton()
+        await basicHelper.waitForNetworkIdle({ timeout: 300 })
+
+        //access card messages
+        await commonCardAssert.isTitleRowText(ELEMENTS_TEXT.RESET_PASSWORD_SUCCESS_CARD.FIRST_ROW)
+        await commonCardAssert.isTitleRowText(ELEMENTS_TEXT.RESET_PASSWORD_SUCCESS_CARD.SECOND_ROW, 1)
+    }
+    async function verifyLoginSuccess() {
+        let currentUrl = page.url()
+        expect(currentUrl).toEqual(`${URL}/billing`)
+    }
+
+    test('Reset Password', async () => {
         const firstPassword = dataHelper.randPassword()
         const secondPassword = dataHelper.randPassword()
         const subject = ELEMENTS_TEXT.RESET_PASWORD_EMAIL.SUBJECT
         const wrongCredentialsMesssage = ELEMENTS_TEXT.SIGN_IN_CARD.WRONG_CREDENTIALS_MESSAGE
-        console.log(`first password - ${firstPassword}`)
-        console.log(`second password - ${secondPassword}`)
-
-        async function resetPassword() {
-            //go to sign in with email card
-            await welcomeCard.clickSignInWithYourMail()
-            await commonCardAssert.isTitleRowText(secondHeader, 1)
-
-            //Click forgot password link
-            await signInCard.clickForgotPasswordLink()
-            await commonCardAssert.isTitleRowText(ELEMENTS_TEXT.FORGOT_PASSWORD_CARD.FIRST_ROW, 0)
-            await commonCardAssert.isTitleRowText(ELEMENTS_TEXT.FORGOT_PASSWORD_CARD.SECOND_ROW, 1)
-            await forgotPasswordCardAssert.isSentResetDisabled() //verify button is disabled
-
-            //set registered email and confirm reset
-            await forgotPasswordCard.setEmail(email)
-            await forgotPasswordCardAssert.isSentResetEnabled() //verify button is enabled
-            await forgotPasswordCard.clickResetPasswordButton()
-
-            //verify confirmation message for reset password action
-            await basicHelper.waitForNetworkIdle({ timeout: 250 })
-            await commonCardAssert.isTitleRowText(ELEMENTS_TEXT.FORGOT_PASSWORD_CONFIRMATION_CARD.FIRST_ROW, 0)
-            await commonCardAssert.isTitleRowText(email, 1)
-            await commonCardAssert.isCardText(ELEMENTS_TEXT.FORGOT_PASSWORD_CONFIRMATION_CARD.THIRD_ROW)
-        }
-        async function setNewPassword(resetURL, pass) {
-            //visit new confirmation link
-            await Promise.all([
-                page.goto(resetURL, { waitUntil: 'domcontentloaded' }),
-                page.waitForNavigation({ waitUntil: 'networkidle0' })
-            ])
-
-            //assert card is correct
-            await commonCardAssert.isTitleRowText(ELEMENTS_TEXT.RESET_PASSWORD_CARD.FIRST_ROW)
-            await commonCardAssert.isTitleRowText(ELEMENTS_TEXT.RESET_PASSWORD_CARD.SECOND_ROW, 1)
-
-            //set new password and click Reset
-            await resetPasswordCard.setPassword(pass)
-            await resetPasswordCard.setSecondPassword(pass)
-            await resetPasswordCard.clickResetButton()
-            await basicHelper.waitForNetworkIdle({ timeout: 300 })
-
-            //access card messages
-            await commonCardAssert.isTitleRowText(ELEMENTS_TEXT.RESET_PASSWORD_SUCCESS_CARD.FIRST_ROW)
-            await commonCardAssert.isTitleRowText(ELEMENTS_TEXT.RESET_PASSWORD_SUCCESS_CARD.SECOND_ROW, 1)
-        }
-        async function verifyLoginSuccess() {
-            let currentUrl = page.url()
-            expect(currentUrl).toEqual(`${URL}/billing`)
-        }
 
         await resetPassword()
         //verify mailBox
-        let emails = await mailHelper.messageChecker({ to: email, subject: subject , interval: 5000})
+        let emails = await mailHelper.messageChecker({ to: resetEmail, subject: subject, interval: 10000 })
         let startTime = Date.now()
         while (emails.length === 0 && Date.now() - startTime < 120000) {
-            console.log(`Polling emails on mailbox: ${email}...`)
+            console.log(`Polling emails on mailbox: ${resetEmail}...`)
             await page.waitFor(4000)
-            emails = await mailHelper.messageChecker()
+            emails = await mailHelper.messageChecker({ to: resetEmail, subject: subject, interval: 10000 })
         }
         let emailBodyHtml = emails[0].body.html
         const resetPasswordURL = mailHelper.getConfirmationLink(emailBodyHtml) //grab link from email body
-        console.log(`reset password URL = ${resetPasswordURL}`)
+        console.log(`reset password URL - ${resetPasswordURL}`)
+        for (const email of emails) {
+            console.log(`subject - ${email.subject}`)
+        }
 
         //set new password
         await setNewPassword(resetPasswordURL, firstPassword)
@@ -124,7 +124,7 @@ describe('Forgot Password', () => {
         await browserHelper.clearBrowserStorageAndCookies()
         await reloadPage()
         await welcomeCard.clickSignInWithYourMail()
-        await signInCard.setEmail(email)
+        await signInCard.setEmail(resetEmail)
         await signInCard.setPassword(firstPassword)
         await Promise.all([
             await signInCard.clickSignIn(),
@@ -141,11 +141,11 @@ describe('Forgot Password', () => {
         startTime = Date.now()
         let newResetPasswordURL
         do {
-            emails = await mailHelper.messageChecker({ to: email, subject: subject })
+            emails = await mailHelper.messageChecker({ to: resetEmail, subject: subject, interval: 10000 })
             while (emails.length === 0 && Date.now() - startTime < 40000) {
-                console.log(`Polling emails on mailbox: ${email}...`)
+                console.log(`Polling emails on mailbox: ${resetEmail}...`)
                 await page.waitFor(4000)
-                emails = await mailHelper.messageChecker()
+                emails = await mailHelper.messageChecker({ to: resetEmail, subject: subject, interval: 10000 })
             }
             emailBodyHtml = emails[0].body.html
             newResetPasswordURL = mailHelper.getConfirmationLink(emailBodyHtml)
@@ -163,7 +163,7 @@ describe('Forgot Password', () => {
             page.waitForNavigation({ waitUntil: 'networkidle0' })
         ])
         await welcomeCard.clickSignInWithYourMail()
-        await signInCard.setEmail(email)
+        await signInCard.setEmail(resetEmail)
         await signInCard.setPassword(firstPassword)
         await signInCard.clickSignIn()
 
@@ -279,5 +279,51 @@ describe('Forgot Password', () => {
         await forgotPasswordCard.clickCancelButton()
         //verify welcome page is displayed
         await verifyWelcomePage()
+    })
+
+    test('Password Validation in Reset Password Card', async () => {
+        const shortPassword = dataHelper.randPassword(7)
+        const compromisedPassword = '1234qwert'
+        const validPassword = dataHelper.randPassword(8)
+        const subject = ELEMENTS_TEXT.RESET_PASWORD_EMAIL.SUBJECT
+        console.log(`valid password - ${validPassword}`)
+
+        await resetPassword()
+        //verify mailBox
+        let emails = await mailHelper.messageChecker({ to: resetEmail, subject: subject, interval: 5000 })
+        let startTime = Date.now()
+        while (emails.length === 0 && Date.now() - startTime < 120000) {
+            console.log(`Polling emails on mailbox: ${resetEmail}...`)
+            await page.waitFor(4000)
+            emails = await mailHelper.messageChecker()
+        }
+        let emailBodyHtml = emails[0].body.html
+        const resetPasswordURL = mailHelper.getConfirmationLink(emailBodyHtml) //grab link from email body
+        console.log(`reset password URL = ${resetPasswordURL}`)
+
+        //visit new confirmation link
+        await Promise.all([
+            page.goto(resetPasswordURL, { waitUntil: 'domcontentloaded' }),
+            page.waitForNavigation({ waitUntil: 'networkidle0' })
+        ])
+        await resetPasswordCardAssert.isResetDisabled()
+
+        //set new password and click Reset
+        await resetPasswordCard.setPassword(shortPassword)
+        await commonCardAssert.isHintText(ELEMENTS_TEXT.CARD_FIELDS_HINTS.SHORT_PASSWORD, 0)
+        await resetPasswordCardAssert.isResetDisabled()
+
+        //check 8 characters password is OK
+        await resetPasswordCard.setPassword(validPassword)
+        await commonCardAssert.isHintText('', 0)
+        await resetPasswordCard.setSecondPassword(validPassword)
+        await commonCardAssert.isHintText('OK', 1)
+
+        //check compromised password validation
+        await resetPasswordCard.setPassword(compromisedPassword)
+        await basicHelper.waitForNetworkIdle({ timeout: 250 })
+        await commonCardAssert.isHintText(ELEMENTS_TEXT.CARD_FIELDS_HINTS.CONPROMISED_PASSWORD, 0)
+        await resetPasswordCardAssert.isResetDisabled()
+        await commonCardAssert.isHintText(ELEMENTS_TEXT.CARD_FIELDS_HINTS.PASSWORDS_NOT_MATCHING, 1)
     })
 })

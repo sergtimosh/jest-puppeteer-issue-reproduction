@@ -21,7 +21,7 @@ export const mailHelper = {
   },
 
   async messageChecker({ from, to, subject, interval = 60000 } = {}) {
-    const email = await get_messages(
+    const emails = await get_messages(
       resolve("support/gmail-tester-data/credentials.json"),
       resolve("support/gmail-tester-data/gmail_token.json"),
       {
@@ -32,7 +32,7 @@ export const mailHelper = {
         after: new Date(Date.now() - interval)
       }
     )
-    return email
+    return emails
   },
 
   async createRandomEmail(randomNum) {

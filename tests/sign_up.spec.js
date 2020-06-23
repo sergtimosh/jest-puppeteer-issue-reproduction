@@ -113,7 +113,7 @@ describe('Sign up', () => {
         const email = dataHelper.randEmail()
         const shortPassword = dataHelper.randPassword(7)
         const compromisedPassword = '1234qwert'
-        const password = dataHelper.randPassword()
+        const password = dataHelper.randPassword(8)
         //go to sign up card
         await welcomeCard.clickSignInWithYourMail()
         await signInCard.clickSignUpLink()
