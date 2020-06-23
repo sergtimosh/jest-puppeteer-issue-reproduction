@@ -317,7 +317,7 @@ describe('Forgot Password', () => {
         await resetPasswordCard.setPassword(validPassword)
         await commonCardAssert.isHintText('', 0)
         await resetPasswordCard.setSecondPassword(validPassword)
-        await commonCardAssert.isHintText('OK', 1)
+        await commonCardAssert.isHintText(ELEMENTS_TEXT.CARD_FIELDS_HINTS.PASSWORD_OK, 1)
 
         //check compromised password validation
         await resetPasswordCard.setPassword(compromisedPassword)
