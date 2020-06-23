@@ -9,7 +9,7 @@ import { welcomeCard, welcomeCardAssert } from "../support/pages/sections/Welcom
 
 // jest.retryTimes(0)
 
-const URL = ENV_CONFIG.URL
+const URL = ENV_CONFIG.URL + ENV_CONFIG.LANG_CODE
 console.log(`environment url - ${URL}`)
 
 beforeEach(async () => {

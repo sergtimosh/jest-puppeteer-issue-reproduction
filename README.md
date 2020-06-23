@@ -1,4 +1,4 @@
-## Priority Web Automation
+## Priority Auth Web Automation
 
 Priority E2E tests written with the use of puppeteer + jest (https://pptr.dev/, https://jestjs.io/) 
 
@@ -30,11 +30,11 @@ $ HEADLESS='false' npx jest --silent
 #### Executing particular test:
 - run any(in any unix shell):
 ```
-$ HEADLESS='false' npm test 'suite name'       //suite name is a string from the describe() block (ex. npm test 'Login')
+$ HEADLESS='false' npm test 'suite name'       //suite name is a string from the describe() block (ex. npm test 'Sign up')
 
-$ HEADLESS='false' npm test 'test name'       //test name is a string in the test() block (ex. npm test 'Delete Internal Dialog')
+$ HEADLESS='false' npm test 'test name'       //test name is a string in the test() block (ex. npm test 'Login via Google')
 
-$ HEADLESS='false' npx jest <file name path> --silent    //file name should have <*.spec.js> pattern (ex. npm test tests/create_order.spec.js)
+$ HEADLESS='false' npx jest <file name path> --silent    //file name should have <*.spec.js> pattern (ex. npm test tests/sign_up.spec.js)
 ```
 - run any(in windows power shell):
 ```
@@ -42,7 +42,29 @@ $ HEADLESS='false' npx jest <file name path> --silent    //file name should have
 
 > $env:HEADLESS='false'; npm test -t='test name'     //test name is a string in the test() block (ex. npm test 'Delete Internal Dialog')
 
-> $env:HEADLESS='false'; npx jest <file name path> --silent   //file name should have <*.spec.js> pattern (ex. npm test tests/create_order.spec.js)
+> $env:HEADLESS='false'; npx jest <file name path> --silent   //file name should have <*.spec.js> pattern (ex. npm test tests/sign_up.spec.js)
+```
+
+#### Select environment for test execution:
+- run any(in any unix shell):
+```
+$ ENV=DEV LANG=HEB npx jest       //execute tests against DEV environment with HEBREW language parameter
+
+$ ENV=STAGING LANG=ENG npx jest   //execute tests against STAGING environment with ENGLISH language parameter
+
+$ npx jest    //execute tests against default environment and with default language parameter(STAGING and ENGLISH)
+```
+- run any(in windows power shell):
+```
+> $env:ENV='DEV'; $env:LANG='HEB'; npx jest    //execute tests against DEV environment with HEBREW language parameter in windows power shell
+```
+
+#### Run tests in paralell:
+- run any:
+```
+$ npx jest --maxWorkers=1           //that will run only one test in a row
+
+$ npx jest --maxWorkers=4           //that will run 4 tests in a row
 ```
 
 #### Detecting flaky tests:
@@ -50,7 +72,7 @@ $ HEADLESS='false' npx jest <file name path> --silent    //file name should have
 
 ```
 for i in {1..100}; 
-do npx jest tests/create_part.spec.js --silent || (echo "Failed after $i attempts" && break); 
+do npx jest tests/sign_up.spec.js --silent || (echo "Failed after $i attempts" && break); 
 echo "test #$i was executed" ; 
 done; 
 echo "All $i tests were executed"
