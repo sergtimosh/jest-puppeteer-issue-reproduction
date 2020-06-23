@@ -1,5 +1,5 @@
 import { ENGLISH_TEXT, HEBREW_TEXT } from "../support/data/elements_text"
-import { ENVIRONMENTS } from "../support/data/env_config"
+import { ENV_CONFIG, LANG_PARAMETER } from "../support/data/env_config"
 import { browserHelper } from "../support/helpers/BrowserHelper"
 import { commonCardAssert } from "../support/pages/sections/CommonCard"
 import { forgotPasswordCard } from "../support/pages/sections/ForgotPasswordCard"
@@ -9,8 +9,8 @@ import { welcomeCard, welcomeCardAssert } from "../support/pages/sections/Welcom
 
 // jest.retryTimes(0)
 
-const HEBREW_URL = ENVIRONMENTS.HEBREW
-const ENGLISH_URL = ENVIRONMENTS.ENGLISH
+const HEBREW_URL = ENV_CONFIG.URL + LANG_PARAMETER.HEBREW
+const ENGLISH_URL = ENV_CONFIG.URL + LANG_PARAMETER.ENGLISH
 
 beforeEach(async () => {
     await browserHelper.clearBrowserStorageAndCookies()

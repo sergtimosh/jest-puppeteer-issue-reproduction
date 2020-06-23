@@ -1,5 +1,5 @@
+
 let ENVIRONMENT = process.env.ENV
-console.log(`environment - ${ENVIRONMENT}`)
 
 export let ELEMENTS_TEXT = {
     WELCOME_CARD: {
