@@ -53,7 +53,7 @@ describe('Sign up', () => {
         await basicHelper.waitForNetworkIdle({ timeout: 350 })
         await commonCardAssert.isTitleRowText(ELEMENTS_TEXT.THANK_YOU_CARD.FIRST_HEADER, 0)
         await commonCardAssert.isTitleRowText(ELEMENTS_TEXT.THANK_YOU_CARD.SECOND_HEADER, 1)
-        await commonCardAssert.isTitleRowText(ELEMENTS_TEXT.THANK_YOU_CARD.THIRD_HEADER, 2)
+        await signUpCardAssert.isSignUpConfirmText(ELEMENTS_TEXT.THANK_YOU_CARD.THIRD_HEADER, 2)
 
         //try to sign in without email confirmation
         await Promise.all([

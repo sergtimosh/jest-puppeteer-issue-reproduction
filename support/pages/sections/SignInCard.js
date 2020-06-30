@@ -5,7 +5,7 @@ const passwordInput = 'input[name="password"]'
 const signInButton = '.email-signin-button'
 const errorMessageBlock = '.animated.error-message'
 const showPasswordIcon = '.icon-iconon-show-password-on'
-const signUpLink = '.bottom-section > div > button'
+const signUpLink = '.bottom-section > div > a'
 const bottomSectionLinks = '.bottom-section button'
 const forgotPasswordLink = '.submit-row button[class*="Button-module_link"]'
 

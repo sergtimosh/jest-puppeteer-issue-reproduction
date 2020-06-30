@@ -6,6 +6,7 @@ const secondPasswordInput = 'input[name="second password"]'
 const signUpButton = 'button[type="submit"]'
 const goBackLink = '.social-sign-in-link > button'
 const signInLink = '.submit-row div[class*="Label-module_clickable"]'
+const signUpConfirmText = '.signup-confirm-text'
 
 export const signUpCard = {
 
@@ -71,5 +72,11 @@ export const signUpCardAssert = {
         console.log(isDisabled)
         expect(isDisabled).toBeFalsy()
     },
+
+    async isSignUpConfirmText(text) {
+        await page.waitForSelector(signUpConfirmText)
+        const actualText = await basicHelper.getElementText(signUpConfirmText)
+        expect(actualText.trim()).toEqual(text)
+    }
 
 }
