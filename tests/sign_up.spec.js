@@ -129,7 +129,7 @@ describe('Sign up', () => {
 
         //check compromised password validation
         await signUpCard.setPassword(compromisedPassword)
-        await basicHelper.waitForNetworkIdle({ timeout: 250 })
+        await basicHelper.waitForNetworkIdle({ timeout: 350 })
         await commonCardAssert.isHintText(ELEMENTS_TEXT.CARD_FIELDS_HINTS.CONPROMISED_PASSWORD, 1)
     })
 
