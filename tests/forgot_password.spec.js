@@ -321,7 +321,7 @@ describe('Forgot Password', () => {
 
         //check compromised password validation
         await resetPasswordCard.setPassword(compromisedPassword)
-        await basicHelper.waitForNetworkIdle({ timeout: 250 })
+        await basicHelper.waitForNetworkIdle({ timeout: 450 })
         await commonCardAssert.isHintText(ELEMENTS_TEXT.CARD_FIELDS_HINTS.CONPROMISED_PASSWORD, 0)
         await resetPasswordCardAssert.isResetDisabled()
         await commonCardAssert.isHintText(ELEMENTS_TEXT.CARD_FIELDS_HINTS.PASSWORDS_NOT_MATCHING, 1)

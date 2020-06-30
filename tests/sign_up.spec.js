@@ -53,7 +53,7 @@ describe('Sign up', () => {
         await basicHelper.waitForNetworkIdle({ timeout: 350 })
         await commonCardAssert.isTitleRowText(ELEMENTS_TEXT.THANK_YOU_CARD.FIRST_HEADER, 0)
         await commonCardAssert.isTitleRowText(ELEMENTS_TEXT.THANK_YOU_CARD.SECOND_HEADER, 1)
-        await commonCardAssert.isTitleRowText(ELEMENTS_TEXT.THANK_YOU_CARD.THIRD_HEADER, 2)
+        await signUpCardAssert.isSignUpConfirmText(ELEMENTS_TEXT.THANK_YOU_CARD.THIRD_HEADER, 2)
 
         //try to sign in without email confirmation
         await Promise.all([
@@ -129,7 +129,7 @@ describe('Sign up', () => {
 
         //check compromised password validation
         await signUpCard.setPassword(compromisedPassword)
-        await basicHelper.waitForNetworkIdle({ timeout: 250 })
+        await basicHelper.waitForNetworkIdle({ timeout: 350 })
         await commonCardAssert.isHintText(ELEMENTS_TEXT.CARD_FIELDS_HINTS.CONPROMISED_PASSWORD, 1)
     })
 

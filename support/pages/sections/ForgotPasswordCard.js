@@ -3,7 +3,7 @@ import { basicHelper } from "../../helpers/BasicHelper"
 const sendResetPasswordButton = 'button[type="submit"]'
 const emailInput = 'input[name="email"]'
 const cancelButton = 'button.form-stroke-button'
-const goBackButton = 'button[class*="Button-module_link"]'
+const goBackButton = 'a[class*="Link-module_component"]'
 
 export const forgotPasswordCard = {
 

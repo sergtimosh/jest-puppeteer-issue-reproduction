@@ -10,7 +10,6 @@ import { welcomeCard, welcomeCardAssert } from "../support/pages/sections/Welcom
 // jest.retryTimes(0)
 
 const URL = ENV_CONFIG.URL + ENV_CONFIG.LANG_CODE
-console.log(`environment url - ${URL}`)
 
 beforeEach(async () => {
     await browserHelper.clearBrowserStorageAndCookies()
@@ -39,8 +38,8 @@ describe('Login via Third Party Auth Services', () => {
 
         //assert title text
         await commonCardAssert.isTitleRowText(firstHeader, 0)
-        await commonCardAssert.isTitleRowText(thirdHeader, 2)
-        await commonCardAssert.isTitleRowText(sectionDivider, 3)
+        await commonCardAssert.isThirdTitleText(thirdHeader)
+        await commonCardAssert.isTitleRowText(sectionDivider, 2)
 
         //assert  button text
         await welcomeCardAssert.isMicrosoftButtonText(microsoftButtonText)
@@ -69,8 +68,8 @@ describe('Login via Third Party Auth Services', () => {
         await clickElementAndWaitForNavigation(buttonNextSelector)
         const passwordInput = await page.waitForSelector('input[type="password"]', { visible: true, timeout: 5000 })
         await passwordInput.type(googlePassword)
-        const subMitSelector = await basicHelper.raceSelectors(['#identifierNext:not([disabled])', '#submit:not([disabled]'])
-        await clickElementAndWaitForNavigation(subMitSelector)
+        const submitSelector = await basicHelper.raceSelectors(['#identifierNext:not([disabled])', '#submit:not([disabled]'])
+        await clickElementAndWaitForNavigation(submitSelector)
         await basicHelper.waitForNetworkIdle({ timeout: 600 })
         const currentUrl = page.url()
         expect(currentUrl).toBe(`${URL}/billing`)

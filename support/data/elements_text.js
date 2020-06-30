@@ -1,5 +1,5 @@
 
-let ENVIRONMENT = process.env.ENV
+let LANGUAGE = process.env.LANG
 
 export let ELEMENTS_TEXT = {
     WELCOME_CARD: {
@@ -77,13 +77,13 @@ export const HEBREW_TEXT = {
         MICROSOFT_BUTTON: 'בעזרת אופיס 365',
         GOOGLE_BUTTON: 'בעזרת גוגל',
         COMMON_SIGN_BUTTON: 'התחברות עם כתובת הדוא\"ל שלך',
-        DISCLAIMER_TERMS_LINK: 'מדיניות השימוש,',
+        DISCLAIMER_TERMS_LINK: 'מדיניות השימוש',
         DISCLAIMER_PRIVACY_LINK: 'מדיניות הפרטיות'
     },
 
     SIGN_IN_CARD: {
         SECOND_HEADER: 'התחברות עם כתובת הדוא\"ל שלך',
-        WRONG_CREDENTIALS_MESSAGE: 'נראה שנפלה טעות בכתובת הדוא\"ל או בסיסמה. עוד ניסיון?',
+        WRONG_CREDENTIALS_MESSAGE: 'נראה שנפלה טעות בכתובת הדוא\"ל או בסיסמה.\nעוד ניסיון?',
         SIGN_UP_LINK: 'הרשמה'
     },
 
@@ -144,13 +144,13 @@ export const ENGLISH_TEXT = {
         MICROSOFT_BUTTON: 'With Office 365',
         GOOGLE_BUTTON: 'With Google',
         COMMON_SIGN_BUTTON: 'Sign in with your email',
-        DISCLAIMER_TERMS_LINK: 'Terms of Use,',
+        DISCLAIMER_TERMS_LINK: 'Terms of Use',
         DISCLAIMER_PRIVACY_LINK: 'Privacy Policy'
     },
 
     SIGN_IN_CARD: {
         SECOND_HEADER: 'Sign in with your email',
-        WRONG_CREDENTIALS_MESSAGE: 'Looks like these are not the correct details. Please try again.',
+        WRONG_CREDENTIALS_MESSAGE: 'Looks like these are not the correct details.\nPlease try again.',
         SIGN_UP_LINK: 'Sign Up'
     },
 
@@ -203,12 +203,12 @@ export const ENGLISH_TEXT = {
     }
 }
 
-switch (ENVIRONMENT) {
-    case 'HEBREW':
+switch (LANGUAGE) {
+    case 'HEB':
         ELEMENTS_TEXT = HEBREW_TEXT
         break;
 
-    case 'ENGLISH':
+    case 'ENG':
         ELEMENTS_TEXT = ENGLISH_TEXT
         break;
 
