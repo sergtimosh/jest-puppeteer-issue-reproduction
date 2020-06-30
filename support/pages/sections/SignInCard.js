@@ -7,7 +7,7 @@ const errorMessageBlock = '.animated.error-message'
 const showPasswordIcon = '.icon-iconon-show-password-on'
 const signUpLink = '.bottom-section > div > a'
 const bottomSectionLinks = '.bottom-section button'
-const forgotPasswordLink = '.submit-row button[class*="Button-module_link"]'
+const forgotPasswordLink = '.submit-row a'
 
 export const signInCard = {
 
