@@ -83,7 +83,7 @@ export const HEBREW_TEXT = {
 
     SIGN_IN_CARD: {
         SECOND_HEADER: 'התחברות עם כתובת הדוא\"ל שלך',
-        WRONG_CREDENTIALS_MESSAGE: 'נראה שנפלה טעות בכתובת הדוא\"ל או בסיסמה. עוד ניסיון?',
+        WRONG_CREDENTIALS_MESSAGE: 'נראה שנפלה טעות בכתובת הדוא\"ל או בסיסמה.\nעוד ניסיון?',
         SIGN_UP_LINK: 'הרשמה'
     },
 
@@ -150,7 +150,7 @@ export const ENGLISH_TEXT = {
 
     SIGN_IN_CARD: {
         SECOND_HEADER: 'Sign in with your email',
-        WRONG_CREDENTIALS_MESSAGE: 'Looks like these are not the correct details. Please try again.',
+        WRONG_CREDENTIALS_MESSAGE: 'Looks like these are not the correct details.\nPlease try again.',
         SIGN_UP_LINK: 'Sign Up'
     },
 

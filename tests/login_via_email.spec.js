@@ -115,7 +115,7 @@ describe('Login via Email', () => {
             page.waitForNavigation({ waitUntil: 'networkidle0' }),
         ])
         await commonCardAssert.isTitleRowText(firstHeader, 0)
-        
+
         //sign in
         await welcomeCard.clickSignInWithYourMail()
         await signInCard.setEmail(email)
