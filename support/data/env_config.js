@@ -20,35 +20,35 @@ export let ENV_CONFIG = {
 
 switch (ENVIRONMENT) {
     case 'STAGING':
-        ENV_CONFIG.URL = ENVIRONMENTS.STAGING;
-        selectLang();
+        selectLang()
+        ENV_CONFIG.URL = ENVIRONMENTS.STAGING
         console.log(`environment url - ${ENV_CONFIG.URL + ENV_CONFIG.LANG_CODE}`)
         break;
 
     case 'DEV':
-        ENV_CONFIG.URL = ENVIRONMENTS.DEV;
-        selectLang();
+        selectLang()
+        ENV_CONFIG.URL = ENVIRONMENTS.DEV
         console.log(`environment url - ${ENV_CONFIG.URL + ENV_CONFIG.LANG_CODE}`)
         break;
 
     case 'PROD':
-        ENV_CONFIG.URL = ENVIRONMENTS.PROD;
-        selectLang();
+        selectLang()
+        ENV_CONFIG.URL = ENVIRONMENTS.PROD
         console.log(`environment url - ${ENV_CONFIG.URL + ENV_CONFIG.LANG_CODE}`)
         break;
 
     default:
+        selectLang()
         ENV_CONFIG.URL = ENVIRONMENTS.STAGING;
-        selectLang();
         console.log(`environment url - ${ENV_CONFIG.URL + ENV_CONFIG.LANG_CODE}`)
         break;
 }
 
-async function selectLang() {
+function selectLang() {
     if (LANGUAGE === 'HEB') {
         ENV_CONFIG.LANG_CODE = LANG_PARAMETER.HEBREW
     } else if (LANGUAGE === 'ENG') {
         ENV_CONFIG.LANG_CODE = LANG_PARAMETER.ENGLISH
     }
-    ENV_CONFIG.LANG_CODE = LANG_PARAMETER.ENGLISH
+    else ENV_CONFIG.LANG_CODE = LANG_PARAMETER.ENGLISH
 }
