@@ -7,7 +7,7 @@
   "description": "Puppeteer-Jest tests for Priority ERP",
   "main": "index.js",
   "scripts": {
-    "test": "node --trace-warnings --unhandled-rejections=strict node_modules/.bin/jest --no-cache"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
