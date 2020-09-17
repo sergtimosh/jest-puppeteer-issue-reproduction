@@ -1,0 +1,35 @@
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Dependency directory
+# https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
+node_modules
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+#IDE generated files
+.idea
+.vscode
+
+#try Node.js
+nodeTries.js
+
+#debug temp files and dirs
+*temp/
+*copy.spec.js
+reports/screenshots/*.png
+tests/*_temp.js
+temp_downloads/
